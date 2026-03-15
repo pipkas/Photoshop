@@ -52,3 +52,121 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+## ===========================================
+## .NET / C# Core
+## ===========================================
+
+# Build output
+bin/
+obj/
+artifacts/
+publish/
+*.nupkg
+*.nupkg.sha512
+*.snupkg
+*.symbols.nupkg
+
+# NuGet Packages
+packages/
+*.nuget.props
+*.nuget.targets
+
+# SDK projects (new format)
+[Bb]in/
+[Oo]bj/
+
+# Legacy project format
+*.user
+*.userosscache
+*.sln.docstates
+*.csproj.user
+*.fsproj.user
+*.vbproj.user
+
+# Backup & temporary files
+*~
+*.bak
+*.tmp
+*.swp
+*.swo
+Thumbs.db
+Thumbs.db:*
+ehthumbs.db
+
+## ===========================================
+## IDE Specific
+## ===========================================
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.v12.suo
+*.v13.suo
+*.v14.suo
+*.v15.suo
+*.v16.suo
+*.v17.suo
+*.v18.suo
+*.v19.suo
+*.v20.suo
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/keybindings.json
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+*.sln
+*.csproj.iml
+*.suo
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+__MACOSX/
+
+# Windows
+$RECYCLE.BIN/
+Desktop.ini
+
+## ===========================================
+## Debug & Diagnostics
+## ===========================================
+
+# Debug symbols (optional — раскомментируйте если не хотите коммитить)
+# *.pdb
+
+# Memory dumps
+*.dmp
+*.mdmp
+
+# Logs
+*.log
+logs/
+*.log.*
+log/
+
+## ===========================================
+## Avalonia Specific
+## ===========================================
+
+# Design-time assets
+*.axaml.g.cs
+*.xaml.g.cs
+
+# Publish profiles
+Properties/PublishProfiles/
+PublishProfiles/
