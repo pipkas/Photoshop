@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Photoshop.UI.FilterSettingsWindow"
+        xmlns:local="using:Photoshop.UI"
+        Title="Штамп"
+        Width="450" Height="400"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        x:DataType="local:FilterSettingsWindow">
+
+    <ScrollViewer Grid.Row="1" Grid.Column="1"
+            HorizontalScrollBarVisibility="Auto" 
+            VerticalScrollBarVisibility="Auto">
+                    
+            <StackPanel Margin="20" Spacing="15" Orientation="Vertical">
+                    
+                <StackPanel x:Name="ParamsContainer" Spacing="10"/>
+
+                <TextBlock x:Name="ErrorText" 
+                    Foreground="Red" 
+                    FontSize="12" 
+                    HorizontalAlignment="Center" 
+                    IsVisible="False"/>
+
+                <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Bottom"
+                    Spacing="20"
+                    Margin="0,0,10,10">
+                    <Button Content="Отмена" Click="OnCancelClick"/>
+                    <Button x:Name="BtnOk" Content="OK" Click="OnOkClick" IsEnabled="False"/>
+                </StackPanel>
+
+            </StackPanel>
+
+        </ScrollViewer> 
+
+</Window>
