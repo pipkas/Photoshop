@@ -7,10 +7,12 @@ using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using Avalonia;
 using Avalonia.Input;
+using Avalonia.Layout;
 using System.ComponentModel;
 using System;
 using Avalonia.Platform.Storage;
 using System.Threading.Tasks;
+using Tmds.DBus.Protocol;
 
 namespace Photoshop.UI;
 
@@ -29,6 +31,8 @@ public partial class MainWindow : Window
         painter.PropertyChanged += Settings_PropertyChanged;
 
         InitBitmap(painter.CurImage.Width, painter.CurImage.Height);
+        UpdateBitmap();
+        MakeComboBox();
         //DataContext = painter.Settings;
     }
 
@@ -43,9 +47,59 @@ public partial class MainWindow : Window
             PixelFormat.Rgba8888,
             AlphaFormat.Opaque);
 
-        UpdateBitmap();
         CanvasImage.Source = Bitmap;
     }
+
+    private void MakeComboBox()
+    {
+        foreach (var filter in painter.Filters)
+        {
+            var attr = filter.GetFilterInfo();
+            var comboItem = new ComboBoxItem
+            {
+                Padding = new Thickness(0)
+            };
+            ToolTip.SetTip(comboItem, attr.NameRu);
+
+            var button = new Button
+            {
+                Content = attr.NameEn,
+                Tag = attr.NameEn,
+                HorizontalAlignment = HorizontalAlignment.Stretch
+            };
+
+            button.Click += OnFilterClick;
+
+            comboItem.Content = button;
+
+            FiltersComboBox.Items.Add(comboItem);
+        }
+    }
+
+    private async void OnFilterClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is Button button && button.Tag is string filterName)
+        {
+            var filter = FilterFinder.FindFilter(painter.Filters, filterName) 
+                ?? throw new InvalidOperationException($"There isn't filter with name {filterName}!");
+
+            var parameters = filter.GetFilterParams();
+            if (parameters != null && parameters.Length != 0)
+            {
+                var dialog = painter.CurFilter != null && filter.Equals2(painter.CurFilter) 
+                    ? new FilterSettingsWindow(parameters, painter.CurFilter.Parameters)
+                    : new FilterSettingsWindow(parameters, null);
+
+                if (dialog != null)
+                {
+                    await dialog.ShowDialog(this);
+                    if (dialog.Params != null)
+                        painter.UseFilter(filter, dialog.Params);
+                }
+            }
+        }
+    }
+
 
     private async void OnHelpClick(object? sender, RoutedEventArgs e)
     {
@@ -126,59 +180,6 @@ public partial class MainWindow : Window
             await using var stream = await file.OpenWriteAsync();
             FileManager.SaveToPng(painter.CurImage, stream);
         }
-    }
-
-    private void OnFilter0ParamsClick(object? sender, RoutedEventArgs e)
-    {
-        if (sender is Button button && button.Tag is string filterName)
-        {
-            painter.UseFilter(filterName);
-        }  
-    }
-
-    private async void OnFilter1ParamsClick(object? sender, RoutedEventArgs e)
-    {
-        if (sender is Button button && button.Tag is string filterName)
-        {
-            var dialog = new FilterSettings1ParamWindow(filterName);
-            if (dialog != null)
-            {
-                await dialog.ShowDialog(this);
-                if (dialog.Value1.HasValue)
-                    painter.UseFilter(filterName, dialog.Value1.Value);
-            }
-        }  
-    }
-
-    private async void OnFilter2ParamsClick(object? sender, RoutedEventArgs e)
-    {
-        if (sender is Button button && button.Tag is string filterName)
-        {
-            var dialog = new FilterSettings2ParamWindow(filterName);
-            if (dialog != null)
-            {
-                await dialog.ShowDialog(this);
-                if (dialog.Value1.HasValue && dialog.Value2.HasValue)
-                    painter.UseFilter(filterName, dialog.Value1.Value, 
-                                                dialog.Value2.Value);
-            }
-        }  
-    }
-
-    private async void OnFilter3ParamsClick(object? sender, RoutedEventArgs e)
-    {
-        if (sender is Button button && button.Tag is string filterName)
-        {
-            var dialog = new FilterSettings3ParamWindow(filterName);
-            if (dialog != null)
-            {
-                await dialog.ShowDialog(this);
-                if (dialog.Value1.HasValue && dialog.Value2.HasValue && dialog.Value3.HasValue)
-                    painter.UseFilter(filterName, dialog.Value1.Value, 
-                                                dialog.Value2.Value, 
-                                                dialog.Value3.Value);
-            }
-        }  
     }
 
     private unsafe void UpdateBitmap()

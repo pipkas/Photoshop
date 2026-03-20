@@ -17,7 +17,6 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
             Orientation="Horizontal">
@@ -37,227 +36,18 @@
                     Save
             </Button>
 
-            
-            <ComboBox HorizontalAlignment="Left"
-                    SelectedIndex="0"
-                    Margin="1,2,1,0"
-                    ToolTip.Tip="Фильтры"
-                    Text="Filters">
+            <ComboBox x:Name="FiltersComboBox" 
+                HorizontalAlignment="Stretch"
+                Margin="1,2,1,0"
+                SelectedIndex="0"
+                ToolTip.Tip="Фильтры">
 
                 <ComboBoxItem IsEnabled="False">
-                    <TextBlock Text="Filters"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Сглаживающий фильтр"
-                                    Padding="0,0,0,0">
-                    <Button Content="Smooth Filter"
-                            Tag="SmoothFilter" 
-                            Click="OnFilter1ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Гамма-коррекция"
-                                    Padding="0,0,0,0">
-                    <Button Content="Gamma Filter"
-                            Tag="GammaFilter"
-                            Click="OnFilter1ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Фильтр выделения границ"
-                                    Padding="0,0,0,0">
-                    <Button Content="Edge Filter"
-                            Tag="EdgeFilter"
-                            Click="OnFilter1ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Фильтр повышения резкости"
-                                    Padding="0,0,0,0">
-                    <Button Content="Sharpen Filter"
-                            Tag="SharpenFilter"
-                            Click="OnFilter0ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Акварелизация"
-                                    Padding="0,0,0,0">
-                    <Button Content="Watercolor Filter"
-                            Tag="WatercolorFilter"
-                            Click="OnFilter0ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Поворот"
-                                    Padding="0,0,0,0">
-                    <Button Content="Rotate Filter"
-                            Tag="RotateFilter"
-                            Click="OnFilter1ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Черно-белый фильтр"
-                                    Padding="0,0,0,0">
-                    <Button Content="BW Filter"
-                            Tag="BWFilter"
-                            Click="OnFilter0ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Инверсия"
-                                    Padding="0,0,0,0">
-                    <Button Content="Invert Filter"
-                            Tag="InvertFilter"
-                            Click="OnFilter0ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Тиснение"
-                                    Padding="0,0,0,0">
-                    <Button Content="Emboss Filter"
-                            Tag="EmbossFilter"
-                            Click="OnFilter0ParamsClick"
-                            HorizontalAlignment="Stretch"/>
+                        <TextBlock Text="Filters"/>
                 </ComboBoxItem>
 
-                <ComboBoxItem ToolTip.Tip="Фильтр карандашного рисунка"
-                                    Padding="0,0,0,0">
-                    <Button Content="Pencil Filter"
-                            Tag="PencilFilter"
-                            Click="OnFilter0ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Разность гауссовых функций"
-                                    Padding="0,0,0,0">
-                    <Button Content="Difference of Gaussian Filter"
-                            Tag="GaussianDiffFilter"
-                            Click="OnFilter2ParamsClick" 
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Двусторонний фильтр"
-                                    Padding="0,0,0,0">
-                    <Button Content="Bilateral Filter"
-                            Tag="BilateralFilter"
-                            Click="OnFilter2ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Дизеринг (Флойд-Стейнберг) в исполнении Полины"
-                                    Padding="0,0,0,0">
-                    <Button Content="Polina's Dither Filter"
-                            Tag="PolinaDitherFilter"
-                            Click="OnFilter3ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Упорядоченный фильтр в исполнении Полины"
-                                    Padding="0,0,0,0">
-                    <Button Content="Polina's Ordered Dither Filter"
-                            Tag="PolinaOrderedDitherFilter"
-                            Click="OnFilter3ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-
-                <ComboBoxItem ToolTip.Tip="Дизеринг (Флойд-Стейнберг) в исполнении Серафима"
-                                    Padding="0,0,0,0">
-                    <Button Content="Seraphim's Dither Filter"
-                            Tag="SeraphimDitherFilter"
-                            Click="OnFilter3ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Упорядоченный фильтр в исполнении Серафима"
-                                    Padding="0,0,0,0">
-                    <Button Content="Seraphim's Ordered Dither Filter"
-                            Tag="SeraphimOrderedDitherFilter"
-                            Click="OnFilter3ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-
-                <ComboBoxItem ToolTip.Tip="Дизеринг (Флойд-Стейнберг) в исполнении Сони"
-                                    Padding="0,0,0,0">
-                    <Button Content="Sonya's Dither Filter"
-                            Tag="SonyaDitherFilter"
-                            Click="OnFilter3ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
-                <ComboBoxItem ToolTip.Tip="Упорядоченный фильтр в исполнении Сони"
-                                    Padding="0,0,0,0">
-                    <Button Content="Sonya's Ordered Dither Filter"
-                            Tag="SonyaOrderedDitherFilter"
-                            Click="OnFilter3ParamsClick"
-                            HorizontalAlignment="Stretch"/>
-                </ComboBoxItem>
-                
             </ComboBox>
-            
         </StackPanel>
-
-        <!-- <StackPanel Grid.Row="1" Grid.Column="0"
-                    Orientation="Vertical"
-                    VerticalAlignment="Center"> 
-
-            <Button ToolTip.Tip="Красный"
-                Tag="rgb(255, 0, 0)"
-                Click="OnColorClick">
-                <Border Width="30" Height="30" Background="Red"/>
-            </Button>
-
-            <Button ToolTip.Tip="Синий"
-                    Tag="rgb(0, 0, 255)"
-                    Click="OnColorClick">
-                <Border Width="30" Height="30" Background="Blue"/>
-            </Button>
-
-            <Button ToolTip.Tip="Жёлтый"
-                     Tag="rgb(255, 255, 0)"
-                    Click="OnColorClick">
-                <Border Width="30" Height="30" Background="Yellow"/>
-            </Button>
-
-            <Button ToolTip.Tip="Зелёный"
-                    Tag="rgb(0, 255, 0)"
-                    Click="OnColorClick">
-                <Border Width="30" Height="30" Background="rgb(0, 255, 0)"/>
-            </Button>
-
-            <ToggleButton Click="OnFillingClick"
-                    IsChecked="{Binding Tool, 
-                    Converter={StaticResource EnumNullableConverter}, ConverterParameter=Filling}"
-                    ToolTip.Tip="Заливка">
-                <Image Source="avares://Photoshop/Assets/fill.png"
-                    Width="30"
-                    Height="30"/>
-            </ToggleButton>
-
-            <ToggleButton Click="OnLineClick"
-                    IsChecked="{Binding Tool, 
-                    Converter={StaticResource EnumNullableConverter}, ConverterParameter=Line}"
-                    ToolTip.Tip="Линия">
-                <Image Source="avares://Photoshop/Assets/line.jpg"
-                    Width="30"
-                    Height="30"/>
-            </ToggleButton>
-
-            <ToggleButton Click="OnStampClick"
-                    IsChecked="{Binding Tool, 
-                    Converter={StaticResource EnumNullableConverter}, ConverterParameter=Stamp}"
-                    ToolTip.Tip="Штамп">
-                <Image Source="avares://Photoshop/Assets/stamp.jpg"
-                    Width="30"
-                    Height="30"/>
-            </ToggleButton>
-
-            <Button Click="OnEraseClick"
-                    ToolTip.Tip="Очистить всё">
-                <Image Source="avares://Photoshop/Assets/erase.jpg"
-                    Width="30"
-                    Height="30"/>
-            </Button>
-        </StackPanel> -->
 
         <ScrollViewer Grid.Row="1" Grid.Column="1"
                       HorizontalScrollBarVisibility="Auto" 

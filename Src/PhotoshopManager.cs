@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -24,35 +25,18 @@ public class PhotoshopManager: INotifyPropertyChanged
     public IFilter? CurFilter {get; set;}
     public Picture OriginalImage {get; set;}
     public Picture ModifiedImage {get; set;}
+    public List<IFilter> Filters {get;}
 
     public PhotoshopManager()
     {
         OriginalImage = new Picture();
         CurImage = OriginalImage;
         CurFilter = null;
+        Filters = FilterFinder.FindFilters();
     }
 
-    public void UseFilter(string filterName, params double[] parameters)
+    public void UseFilter(IFilter filter, double[] parameters)
     {
-        var filterType = AppDomain.CurrentDomain
-                        .GetAssemblies()
-                        .SelectMany(a => a.GetTypes())
-                        .FirstOrDefault(t =>
-                                        typeof(IFilter).IsAssignableFrom(t) &&
-                                        !t.IsInterface && !t.IsAbstract && t.Name == filterName);
-
-        // if (filterType == null)
-        //     throw new InvalidOperationException($"Filter '{filterName}' not found");
-
-        if (filterType == null)
-        {
-            Console.WriteLine($"Filter '{filterName}' not found");
-            return;
-        }
-            
-
-        var filter = (IFilter)Activator.CreateInstance(filterType)!;
-
         var result = filter.Modify(OriginalImage, parameters);
 
         ModifiedImage = result;
