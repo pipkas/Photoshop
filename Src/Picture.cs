@@ -6,8 +6,8 @@ namespace Photoshop.Src;
 
 public class Picture: IReadOnlyPicture
 {
-    public int Width;
-    public int Height;
+    public int Width {get; set;}
+    public int Height {get; set;}
 
     //RGBA color
     private byte[] pixelsBuffer;
@@ -30,7 +30,7 @@ public class Picture: IReadOnlyPicture
         pixelsBuffer = new byte[width * height * ColorBytesCount];
         Clean();
     }
-
+    
     public void SetPixel(int x, int y, byte r, byte g, byte b, byte a = 255)
     {
         CheckBounds(x, y);
