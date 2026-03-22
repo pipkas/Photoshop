@@ -6,7 +6,7 @@ namespace Photoshop.Src.Filters;
  * GaussianDiffFilter - Сглаживающий фильтр по окну 3×3 или 5×5 по выбору пользователя (по Гауссу).
  * 
  */
-[Filter("Размытие по Гауссу", "GaussianDiffFilter", "Assets/filter.png")]
+[Filter("Размытие по Гауссу", "GaussianDiffFilter", "Assets/blur.png")]
 [FilterParameter("Размер ядра", Min = 3, Max = 5, Type = ParameterType.Integer)]
 public class GaussianDiffFilter : IFilter
 {
@@ -34,7 +34,7 @@ public class GaussianDiffFilter : IFilter
     {
         Parameters = parameters;
         
-        int kernelSize = 3;
+        int kernelSize = parameters[0] == 3.0 ? 3 : 5 ;
         if (parameters != null && parameters.Length > 0)
         {
             kernelSize = (int)parameters[0];
