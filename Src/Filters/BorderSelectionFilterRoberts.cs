@@ -3,7 +3,7 @@
 namespace Photoshop.Src.Filters;
 
 [Filter("Оператор Робертса", "RobertsFilter", "Assets/RobertsFilter.png")]
-[FilterParameter("Порог бинаризации", Min = 0, Max = 255, Type = ParameterType.Integer)]
+[FilterParameter("Порог бинаризации", Min = 0, Max = 510, Type = ParameterType.Integer)]
 public class BorderSelectionFilterRoberts : IFilter
 {
     public double[] Parameters { get; private set; }

@@ -52,10 +52,7 @@ public class SharpenFilter : IFilter
                     }
                 }
                 
-                result.SetPixel(x, y,
-                    ClampToByte((int)Math.Round(sumR)),
-                    ClampToByte((int)Math.Round(sumG)),
-                    ClampToByte((int)Math.Round(sumB)));
+                result.SetPixel(x, y, ClampToByte((int)Math.Round(sumR)), ClampToByte((int)Math.Round(sumG)), ClampToByte((int)Math.Round(sumB)));
             }
         }
         

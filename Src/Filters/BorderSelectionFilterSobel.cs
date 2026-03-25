@@ -3,7 +3,7 @@
 namespace Photoshop.Src.Filters;
 
 [Filter("Фильтр выделения границ", "BorderSelectionFilter", "Assets/BorderSelectionFilter.png")]
-[FilterParameter("Порог бинаризации", Min = 0, Max = 255, Type = ParameterType.Integer)]
+[FilterParameter("Порог бинаризации", Min = 0, Max = 1500, Type = ParameterType.Integer)]
 public class BorderSelectionFilterSobel : IFilter
 {
     private static readonly double[,] KernelVert = new double[,]
