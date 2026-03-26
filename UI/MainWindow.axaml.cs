@@ -12,13 +12,13 @@ using System.ComponentModel;
 using System;
 using Avalonia.Platform.Storage;
 using System.Threading.Tasks;
+using Avalonia.Threading;
 
 namespace Photoshop.UI;
 
 public partial class MainWindow : Window
 {
-    private enum DisplayMode { RealSize, FitToScreen }
-    private DisplayMode _displayMode = DisplayMode.RealSize;
+    private DispatcherTimer resizeTimer;
     private readonly PhotoshopManager painter;
     private readonly UISettings settings;
     public WriteableBitmap Bitmap {get; set;}
@@ -35,6 +35,25 @@ public partial class MainWindow : Window
         {
             if (e.Property == ClientSizeProperty)
                 HandleWindowResize(ClientSize);
+        };
+
+        resizeTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(100)
+        };
+
+        resizeTimer.Tick += (_, __) =>
+        {
+            resizeTimer.Stop();
+
+            if (painter.InterpolType != InterpolationType.None)
+            {
+                painter.FitToScreen(
+                    painter.InterpolType,
+                    new System.Drawing.Size(
+                        (int)ImageContainer.Width,
+                        (int)ImageContainer.Height));
+            }
         };
         
         InitBitmap(painter.CurImage.Width, painter.CurImage.Height);
@@ -155,11 +174,6 @@ public partial class MainWindow : Window
         InitBitmap(painter.OriginalImage.Width, painter.OriginalImage.Height);
         painter.CurImage = picture;
         painter.CurFilter = null;
-
-        //нет необходимости подстраивать размер окна к размеру изображения
-        // Width = CanvasImage.Width + UISettings.DeltaWindowCanvasWidth;
-        // Height = CanvasImage.Height + UISettings.DeltaWindowCanvasHeight;
-        // CenterWindow();
     }
 
     private async void OnSaveClick(object? sender, RoutedEventArgs e)
@@ -207,13 +221,20 @@ public partial class MainWindow : Window
 
         CanvasImage?.InvalidateVisual();
     }
-
-    private void OnFitChecked(object? sender, RoutedEventArgs e) => SetDisplayMode(DisplayMode.FitToScreen);
-    private void OnFitUnchecked(object? sender, RoutedEventArgs e) => SetDisplayMode(DisplayMode.RealSize);
-
-    private void SetDisplayMode(DisplayMode mode)
+    private void OnFitClick(object? sender, RoutedEventArgs e)
     {
-        
+        if (sender is Button button && button.Tag is string interpolName 
+            && Enum.TryParse(interpolName, true, out InterpolationType interpolType))
+        {
+            painter.FitToScreen(interpolType, 
+            new System.Drawing.Size((int)ImageContainer.Width, (int)ImageContainer.Height));
+        }
+    }
+
+    private void OnPixelToPixelClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is Button)
+            painter.MakeRealSize();
     }
 
     private void Settings_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -231,17 +252,13 @@ public partial class MainWindow : Window
     {
         ImageContainer.Width = (int)newWindowSize.Width - UISettings.DeltaWindowWidth;
         ImageContainer.Height = (int)newWindowSize.Height - UISettings.DeltaWindowHeight;
-        //если FitToScreen и не влезает исходное изображение в рамку, то менять изображение
+        resizeTimer.Stop();
+        resizeTimer.Start();
     }
 
     private void OnImagePointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (painter.ModifiedImage == null)
-            return;
-        
-        painter.CurImage = painter.CurImage == painter.OriginalImage 
-            ? painter.ModifiedImage
-            : painter.OriginalImage;
+        painter.SwitchCurImage();
     }
 }
        

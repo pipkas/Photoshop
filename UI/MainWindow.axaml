@@ -48,11 +48,50 @@
 
             </ComboBox>
 
-            <ToggleButton x:Name="FitToggle" 
-                Checked="OnFitChecked" 
-                Unchecked="OnFitUnchecked" 
-                Margin="8,0,0,0">Fit
-             </ToggleButton> 
+            <ComboBox x:Name="FitComboBox" 
+                HorizontalAlignment="Stretch"
+                Margin="1,2,1,0"
+                SelectedIndex="0"
+                ToolTip.Tip="Подогнать под экран">
+
+                <ComboBoxItem IsEnabled="False">
+                        <TextBlock Text="Fit to screen"/>
+                </ComboBoxItem>
+
+                <ComboBoxItem Padding ="0">
+                        <Button Click="OnFitClick"
+                                Tag="Cubic"
+                                ToolTip.Tip="Кубическая интерполяция"
+                                HorizontalAlignment = "Stretch">
+                                Cubic
+                        </Button>
+                </ComboBoxItem>
+
+                <ComboBoxItem Padding ="0">
+                        <Button Click="OnFitClick"
+                                Tag="Bilinear"
+                                ToolTip.Tip="Билинейная интерполяция"
+                                HorizontalAlignment = "Stretch">
+                                Bilinear
+                        </Button>
+                </ComboBoxItem>
+
+                <ComboBoxItem Padding ="0">
+                        <Button Click="OnFitClick"
+                                Tag="Step"
+                                ToolTip.Tip="Ступенчатая интерполяция"
+                                HorizontalAlignment = "Stretch">
+                                Step
+                        </Button>
+                </ComboBoxItem>
+
+            </ComboBox>
+
+            <Button x:Name="PixeltoPixelToggle" 
+                Click="OnPixelToPixelClick"
+                ToolTip.Tip="Реальный размер"
+                Margin="8,0,0,0">Real size
+             </Button> 
         </StackPanel>
 
         <Rectangle Grid.Row="1" Grid.Column="1" 
