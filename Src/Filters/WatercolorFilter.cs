@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Акварелизация", "WatercolorFilter", "Assets/filter.png")]
+[Filter("Акварелизация", "WatercolorFilter", "Assets/watercolor.png")]
 [FilterParameter("Размер ядра (нечет)", Min = 3, Max = 7, Type = ParameterType.OddInteger)]
 public class WatercolorFilter : IFilter
 {

@@ -20,8 +20,5 @@ public static class FilterExtensions
 
         return filter.GetType().GetCustomAttribute<FilterAttribute>(inherit: true)!;
     }
-
-    public static bool Equals2(this IFilter filter1, IFilter filter2)
-    => filter1.GetFilterInfo().NameEn.Equals(filter2.GetFilterInfo().NameEn);
     
 }

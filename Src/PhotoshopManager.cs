@@ -58,7 +58,11 @@ public class PhotoshopManager: INotifyPropertyChanged
 
     public void FitToScreen(InterpolationType type, Size newImageSize)
     {
-        if (type == InterpolationType.None || CurImage.Width <= newImageSize.Width && CurImage.Height <= newImageSize.Height)
+        if (type == InterpolationType.None)
+            return;
+
+        if (CurImage.Width <= newImageSize.Width && CurImage.Height <= newImageSize.Height 
+            && InterpolType == InterpolationType.None)
             return;
 
         InterpolType = type;

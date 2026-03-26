@@ -113,8 +113,8 @@
 
                         <Image x:Name="CanvasImage"
                                 Stretch="None"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
                                 PointerPressed="OnImagePointerPressed"/>
                         </ScrollViewer>
                 </Grid>

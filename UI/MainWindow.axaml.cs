@@ -39,7 +39,7 @@ public partial class MainWindow : Window
 
         resizeTimer = new DispatcherTimer
         {
-            Interval = TimeSpan.FromMilliseconds(100)
+            Interval = TimeSpan.FromMilliseconds(50)
         };
 
         resizeTimer.Tick += (_, __) =>
@@ -114,7 +114,7 @@ public partial class MainWindow : Window
 
             if (parameters != null && parameters.Length != 0)
             {
-                var dialog = painter.CurFilter != null && filter.Equals2(painter.CurFilter) 
+                var dialog = painter.CurFilter != null && filter.GetFilterInfo().NameEn.Equals(painter.CurFilter.GetFilterInfo().NameEn) 
                     ? new FilterSettingsWindow(parameters, painter.CurFilter.Parameters)
                     : new FilterSettingsWindow(parameters, null);
 
