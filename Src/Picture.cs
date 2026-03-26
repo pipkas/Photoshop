@@ -63,6 +63,7 @@ public class Picture: IReadOnlyPicture
         Width = newWidth;
         Height = newHeight;
     }
+    
     public bool IsInBounds(int x, int y)
     {
         return x >= 0 && x < Width && y >= 0 && y < Height;

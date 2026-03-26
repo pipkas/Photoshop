@@ -35,7 +35,7 @@ public class PhotoshopManager: INotifyPropertyChanged
         Filters = FilterFinder.FindFilters();
     }
 
-    public void UseFilter(IFilter filter, double[] parameters)
+    public void UseFilter(IFilter filter, double[]? parameters)
     {
         var result = filter.Modify(OriginalImage, parameters);
 

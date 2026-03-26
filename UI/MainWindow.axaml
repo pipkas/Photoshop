@@ -2,11 +2,11 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:internal="using:Avalonia.Dialogs.Internal"
+    xmlns:avalonia="https://github.com/avaloniaui"
     x:Class="Photoshop.UI.MainWindow"
     xmlns:vm="clr-namespace:Photoshop"
     Width="640"
     Height="480">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -47,15 +47,39 @@
                 </ComboBoxItem>
 
             </ComboBox>
+
+            <ToggleButton x:Name="FitToggle" 
+                Checked="OnFitChecked" 
+                Unchecked="OnFitUnchecked" 
+                Margin="8,0,0,0">Fit
+             </ToggleButton> 
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1" Grid.Column="1"
-                      HorizontalScrollBarVisibility="Auto" 
-                      VerticalScrollBarVisibility="Auto">
-            <Image x:Name="CanvasImage"
-                Stretch="None"
-                PointerPressed="OnImagePointerPressed"/>
-        </ScrollViewer>
+        <Rectangle Grid.Row="1" Grid.Column="1" 
+                x:Name="ViewportFrame"
+                Stroke="Gray"
+                StrokeThickness="1"
+                IsHitTestVisible="False"
+                Margin="7"/>
+
+        <Border Grid.Row="1" Grid.Column="1"
+                x:Name="ImageContainer"
+                Background="{DynamicResource WindowBackground}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <Grid>
+                        <ScrollViewer x:Name="ImageScrollViewer"
+                                HorizontalScrollBarVisibility="Auto"
+                                VerticalScrollBarVisibility="Auto">
+
+                        <Image x:Name="CanvasImage"
+                                Stretch="None"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                PointerPressed="OnImagePointerPressed"/>
+                        </ScrollViewer>
+                </Grid>
+        </Border>
     </Grid>
 </Window>
 

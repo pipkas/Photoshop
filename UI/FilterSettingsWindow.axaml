@@ -2,9 +2,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="Photoshop.UI.FilterSettingsWindow"
         xmlns:local="using:Photoshop.UI"
-        Title="Штамп"
-        Width="450" Height="400"
-        CanResize="False"
+        Title="Settings"
+        SizeToContent="WidthAndHeight"
+        MinWidth="400"  
+        MaxWidth="600"                         
+        MaxHeight="400"                       
+        CanResize="True"
         WindowStartupLocation="CenterOwner"
         x:DataType="local:FilterSettingsWindow">
 
@@ -23,7 +26,7 @@
                     IsVisible="False"/>
 
                 <StackPanel Orientation="Horizontal" 
-                    HorizontalAlignment="Right" 
+                    HorizontalAlignment="Center" 
                     VerticalAlignment="Bottom"
                     Spacing="20"
                     Margin="0,0,10,10">

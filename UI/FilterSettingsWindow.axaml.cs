@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
+using Avalonia.Media;
 using Photoshop.Src;
 
 namespace Photoshop.UI;
@@ -45,9 +47,10 @@ public partial class FilterSettingsWindow: Window, INotifyPropertyChanged
 
             var label = new TextBlock
             {
-                Text = parameter.Name,
+                Text = parameter.Name,      
                 VerticalAlignment = VerticalAlignment.Center,
-                Width = 150
+                Width = 220,                       
+                TextTrimming = TextTrimming.None  
             };
             var val = prevParams?[i++] ?? parameter.Min;
 
