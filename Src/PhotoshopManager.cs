@@ -34,7 +34,6 @@ public class PhotoshopManager: INotifyPropertyChanged
     {
         OriginalImage = new Picture();
         CurImage = OriginalImage;
-        CurFilter = null;
         InterpolType = InterpolationType.None;
         Filters = FilterFinder.FindFilters();
     }
@@ -78,6 +77,15 @@ public class PhotoshopManager: INotifyPropertyChanged
             FitModImage = fitImage;
         }
         CurImage = prevImage == OriginalImage ? FitOrigImage : FitModImage;
+    }
+
+    public void CreateNewOrigImage(Picture picture){
+        OriginalImage = picture;
+        ModifiedImage = null;
+        FitModImage = null;
+        FitOrigImage = null;
+        CurFilter = null;
+        CurImage = OriginalImage;
     }
 
     public void MakeRealSize()

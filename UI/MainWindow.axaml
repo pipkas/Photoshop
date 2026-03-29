@@ -128,7 +128,7 @@
                 IsHitTestVisible="False"
                 Margin="7"/>
 
-        <Border Grid.Row="2" Grid.Column="1"
+        <!-- <Border Grid.Row="2" Grid.Column="1"
                 x:Name="ImageContainer"
                 Background="{DynamicResource WindowBackground}"
                 HorizontalAlignment="Center"
@@ -148,7 +148,66 @@
                                 DoubleTapped="OnImageDoubleTapped"/>
                         </ScrollViewer>
                 </Grid>
+        </Border> -->
+
+        <Border Grid.Row="2" Grid.Column="1"
+        x:Name="ImageContainer"
+        Background="{DynamicResource WindowBackground}"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
+                <Grid>
+                        <ScrollViewer x:Name="ImageScrollViewer"
+                                HorizontalScrollBarVisibility="Auto"
+                                VerticalScrollBarVisibility="Auto">
+                        <Image x:Name="CanvasImage"
+                                Stretch="None"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                PointerPressed="OnImagePointerPressed"
+                                PointerMoved="OnImagePointerMoved"
+                                PointerReleased="OnImagePointerReleased"
+                                DoubleTapped="OnImageDoubleTapped"/>
+                        </ScrollViewer>
+
+                        <!-- Кнопка "Назад" (слева) -->
+                        <Button x:Name="PrevImageButton"
+                                Click="OnPrevImageClick"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Margin="10,0,0,0"
+                                Width="40"
+                                Height="40"
+                                Background="#80000000"
+                                BorderThickness="0"
+                                CornerRadius="20"
+                                ToolTip.Tip="Предыдущее изображение">
+                        <TextBlock Text="◀" 
+                                FontSize="20" 
+                                Foreground="White"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Button>
+
+                        <!-- Кнопка "Вперед" (справа) -->
+                        <Button x:Name="NextImageButton"
+                                Click="OnNextImageClick"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Margin="0,0,10,0"
+                                Width="40"
+                                Height="40"
+                                Background="#80000000"
+                                BorderThickness="0"
+                                CornerRadius="20"
+                                ToolTip.Tip="Следующее изображение">
+                        <TextBlock Text="▶" 
+                                FontSize="20" 
+                                Foreground="White"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Button>
+                </Grid>
         </Border>
-    </Grid>
+        </Grid>
 </Window>
 

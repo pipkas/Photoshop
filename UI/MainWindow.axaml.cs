@@ -25,6 +25,7 @@ public partial class MainWindow : Window
     private Vector _startOffset;
     private readonly PhotoshopManager painter;
     private readonly UISettings settings;
+    private ImageViewer? imageViewer;
     public WriteableBitmap Bitmap {get; set;}
 
     public MainWindow()
@@ -214,10 +215,19 @@ public partial class MainWindow : Window
 
         var picture = Picture.LoadFromStream(stream);
 
-        painter.OriginalImage = picture;
-        InitBitmap(painter.OriginalImage.Width, painter.OriginalImage.Height);
-        painter.CurImage = picture;
-        painter.CurFilter = null;
+        imageViewer = new ImageViewer(files[0].Path.LocalPath);
+        if (imageViewer.ImagesCount <= 1)
+        {
+            PrevImageButton.IsVisible = false;
+            NextImageButton.IsVisible = false;
+        }
+        else
+        {
+            PrevImageButton.IsVisible = true;
+            NextImageButton.IsVisible = true;
+        }
+
+        painter.CreateNewOrigImage(picture);
     }
 
     private async void OnSaveClick(object? sender, RoutedEventArgs e)
@@ -249,6 +259,22 @@ public partial class MainWindow : Window
         }
     }
 
+    private void OnPrevImageClick(object? sender, RoutedEventArgs e){
+        if (imageViewer == null) return;
+        var picture = imageViewer.Previous();
+        ImageScrollViewer.Offset = new Vector(0, 0);
+        if (picture != null)
+            painter.CreateNewOrigImage(picture);
+    }
+
+    private void OnNextImageClick(object? sender, RoutedEventArgs e){
+        if (imageViewer == null) return;
+        var picture = imageViewer.Next();
+        ImageScrollViewer.Offset = new Vector(0, 0);
+        if (picture != null)
+            painter.CreateNewOrigImage(picture);
+    }
+
     private unsafe void UpdateBitmap()
     {
         if (Bitmap == null) return;
@@ -265,6 +291,7 @@ public partial class MainWindow : Window
 
         CanvasImage?.InvalidateVisual();
     }
+
     private void OnFitClick(object? sender, RoutedEventArgs e)
     {
         if (sender is Button button && button.Tag is string interpolName 
