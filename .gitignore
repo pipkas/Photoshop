@@ -113,6 +113,7 @@ ehthumbs.db
 *.v18.suo
 *.v19.suo
 *.v20.suo
+.editorconfig
 
 # VS Code
 .vscode/
