@@ -7,5 +7,5 @@ public class FilterAttribute(string nameRu, string nameEn, string imagePath) : A
 {
     public string NameRu { get; } = nameRu;
     public string NameEn { get; } = nameEn;
-    public string ImagePath { get; } = imagePath;
+    public string? ImagePath { get; } = imagePath;
 }

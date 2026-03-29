@@ -6,9 +6,22 @@
     x:Class="Photoshop.UI.MainWindow"
     xmlns:vm="clr-namespace:Photoshop"
     Width="640"
-    Height="480">
+    Height="480"
+    Title="Photoshop">
+    <Window.Styles>
+        <Style Selector="Button.main-control, ComboBox.main-control">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="MinHeight" Value="30"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="CornerRadius" Value="0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </Window.Styles>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -19,28 +32,32 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-            Orientation="Horizontal">
+            Orientation="Horizontal"
+            Background = "rgb(253, 192, 113)">
 
             <Button Click="OnFileClick"
-                    ToolTip.Tip="Открыть файл">
+                    ToolTip.Tip="Открыть файл"
+                    Classes="main-control">
                     File
             </Button>
 
             <Button Click="OnHelpClick"
-                    ToolTip.Tip="О программе">
+                    ToolTip.Tip="О программе"
+                    Classes="main-control">
                     Help
             </Button>
 
             <Button Click="OnSaveClick"
-                    ToolTip.Tip="Сохранить в PNG">
+                    ToolTip.Tip="Сохранить в PNG"
+                    Classes="main-control">
                     Save
             </Button>
 
             <ComboBox x:Name="FiltersComboBox" 
                 HorizontalAlignment="Stretch"
-                Margin="1,2,1,0"
                 SelectedIndex="0"
-                ToolTip.Tip="Фильтры">
+                ToolTip.Tip="Фильтры"
+                Classes="main-control">
 
                 <ComboBoxItem IsEnabled="False">
                         <TextBlock Text="Filters"/>
@@ -50,19 +67,20 @@
 
             <ComboBox x:Name="FitComboBox" 
                 HorizontalAlignment="Stretch"
-                Margin="1,2,1,0"
                 SelectedIndex="0"
-                ToolTip.Tip="Подогнать под экран">
+                ToolTip.Tip="Подогнать под экран"
+                Classes="main-control">
 
                 <ComboBoxItem IsEnabled="False">
-                        <TextBlock Text="Fit to screen"/>
+                        <TextBlock Text="Fit"/>
                 </ComboBoxItem>
 
                 <ComboBoxItem Padding ="0">
                         <Button Click="OnFitClick"
                                 Tag="Cubic"
                                 ToolTip.Tip="Кубическая интерполяция"
-                                HorizontalAlignment = "Stretch">
+                                HorizontalAlignment = "Stretch"
+                                Background = "Transparent">
                                 Cubic
                         </Button>
                 </ComboBoxItem>
@@ -71,7 +89,8 @@
                         <Button Click="OnFitClick"
                                 Tag="Bilinear"
                                 ToolTip.Tip="Билинейная интерполяция"
-                                HorizontalAlignment = "Stretch">
+                                HorizontalAlignment = "Stretch"
+                                Background = "Transparent">
                                 Bilinear
                         </Button>
                 </ComboBoxItem>
@@ -80,7 +99,8 @@
                         <Button Click="OnFitClick"
                                 Tag="Step"
                                 ToolTip.Tip="Ступенчатая интерполяция"
-                                HorizontalAlignment = "Stretch">
+                                HorizontalAlignment = "Stretch"
+                                Background = "Transparent">
                                 Step
                         </Button>
                 </ComboBoxItem>
@@ -90,18 +110,25 @@
             <Button x:Name="PixeltoPixelToggle" 
                 Click="OnPixelToPixelClick"
                 ToolTip.Tip="Реальный размер"
-                Margin="8,0,0,0">Real size
+                Classes="main-control">
+                Real size
              </Button> 
         </StackPanel>
 
-        <Rectangle Grid.Row="1" Grid.Column="1" 
+        <StackPanel x:Name="LabelPanel"
+             Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+             Orientation="Horizontal">
+
+        </StackPanel>
+
+        <Rectangle Grid.Row="2" Grid.Column="1" 
                 x:Name="ViewportFrame"
                 Stroke="Gray"
                 StrokeThickness="1"
                 IsHitTestVisible="False"
                 Margin="7"/>
 
-        <Border Grid.Row="1" Grid.Column="1"
+        <Border Grid.Row="2" Grid.Column="1"
                 x:Name="ImageContainer"
                 Background="{DynamicResource WindowBackground}"
                 HorizontalAlignment="Center"

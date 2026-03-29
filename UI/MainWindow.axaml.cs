@@ -13,12 +13,13 @@ using System;
 using Avalonia.Platform.Storage;
 using System.Threading.Tasks;
 using Avalonia.Threading;
+using Avalonia.Media;
 
 namespace Photoshop.UI;
 
 public partial class MainWindow : Window
 {
-    private DispatcherTimer resizeTimer;
+    private readonly DispatcherTimer resizeTimer;
     private readonly PhotoshopManager painter;
     private readonly UISettings settings;
     public WriteableBitmap Bitmap {get; set;}
@@ -59,6 +60,7 @@ public partial class MainWindow : Window
         InitBitmap(painter.CurImage.Width, painter.CurImage.Height);
         UpdateBitmap();
         MakeComboBox();
+        MakeToolbarButtons();
     }
 
     private void InitBitmap(int width, int height)
@@ -90,7 +92,8 @@ public partial class MainWindow : Window
             {
                 Content = attr.NameEn,
                 Tag = attr.NameEn,
-                HorizontalAlignment = HorizontalAlignment.Stretch
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                Background = Brushes.Transparent
             };
 
             button.Click += OnFilterClick;
@@ -98,6 +101,44 @@ public partial class MainWindow : Window
             comboItem.Content = button;
 
             FiltersComboBox.Items.Add(comboItem);
+        }
+    }
+
+    private void MakeToolbarButtons()
+    {
+        LabelPanel.Children.Clear();
+
+        foreach (var filter in painter.Filters)
+        {
+            var attr = filter.GetFilterInfo();
+            var button = new Button
+            {
+                Tag = attr.NameEn,
+                Width = 32,
+                Height = 32,
+                Background = Brushes.Transparent
+            };
+            ToolTip.SetTip(button, attr.NameRu);
+
+            button.Click += OnFilterClick;
+
+            if (attr.ImagePath != null)
+            {
+                var image = new Image
+                {
+                    Width = 24,
+                    Height = 24,
+                    Stretch = Stretch.Uniform,
+                    Source = new Bitmap(attr.ImagePath)
+                };
+
+                button.Content = image;
+                LabelPanel.Children.Add(button);
+            }
+            else
+            {
+                //все дизеринги добавить в отдельную панельку
+            }
         }
     }
 
@@ -261,4 +302,3 @@ public partial class MainWindow : Window
         painter.SwitchCurImage();
     }
 }
-       

@@ -6,7 +6,7 @@ namespace Photoshop.Src.Filters;
 //затем вычитаем из второй первую и получаем - узкий светлый контур вокруг линии + темный контур на самой линии
 //берем абсолютное значение и получаем светлую границу на темном фоне
 
-[Filter("Разница по Гауссу", "GaussianDiffFilter", "Assets/filter.png")]
+[Filter("Разница по Гауссу", "GaussianDiffFilter", "Assets/gaussianDiff(DoG).png")]
 [FilterParameter("Sigma 1", Min = 0.5, Max = 2.0, Type = ParameterType.Double)]
 [FilterParameter("Sigma 2", Min = 1.0, Max = 5.0, Type = ParameterType.Double)]
 [FilterParameter("Scale (усиление)", Min = 1, Max = 10, Type = ParameterType.Double)]

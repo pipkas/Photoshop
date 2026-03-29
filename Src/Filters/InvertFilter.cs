@@ -3,7 +3,7 @@ using System;
 namespace Photoshop.Src.Filters;
 
 //меняем каждый канал на противоположный
-[Filter("Инверсия", "InvertFilter", "Assets/filter.png")]
+[Filter("Инверсия", "InvertFilter", "Assets/invert.png")]
 public class InvertFilter  : IFilter
 {
     public double[] Parameters {get; private set;} = Array.Empty<double>();

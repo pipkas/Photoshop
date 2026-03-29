@@ -2,7 +2,7 @@ using System;
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Тиснение", "EmbossFilter", "Assets/filter.png")]
+[Filter("Тиснение", "EmbossFilter", "Assets/emboss.png")]
 [FilterParameter("0 - серый, 1 - цветной", Min = 0, Max = 1, Type = ParameterType.Integer)]
 public class EmbossFilter  : IFilter
 {

@@ -5,7 +5,7 @@ namespace Photoshop.UI;
 public class UISettings
 {
     public const int DeltaWindowWidth = 16;
-    public const int DeltaWindowHeight = 50;
+    public const int DeltaWindowHeight = 78;
     public readonly string HelpClickText = 
     @"      Рады приветствовать, дорогой пользователь!
 

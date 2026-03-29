@@ -2,7 +2,7 @@ using System;
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Упорядоченный дизеринг", "PolinaOrderedDitherFilter", "Assets/filter.png")]
+[Filter("Упорядоченный дизеринг", "PolinaOrderedDitherFilter", null)]
 [FilterParameter("Уровень квантования (R)", Min = 2, Max = 128, Type = ParameterType.Integer)]
 [FilterParameter("Уровень квантования (G)", Min = 2, Max = 128, Type = ParameterType.Integer)]
 [FilterParameter("Уровень квантования (B)", Min = 2, Max = 128, Type = ParameterType.Integer)]
