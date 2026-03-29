@@ -142,7 +142,10 @@
                                 Stretch="None"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                PointerPressed="OnImagePointerPressed"/>
+                                PointerPressed="OnImagePointerPressed"
+                                PointerMoved="OnImagePointerMoved"
+                                PointerReleased="OnImagePointerReleased"
+                                DoubleTapped="OnImageDoubleTapped"/>
                         </ScrollViewer>
                 </Grid>
         </Border>

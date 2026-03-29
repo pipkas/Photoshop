@@ -20,6 +20,9 @@ namespace Photoshop.UI;
 public partial class MainWindow : Window
 {
     private readonly DispatcherTimer resizeTimer;
+    private bool _isPanning;
+    private Point _startPoint;
+    private Vector _startOffset;
     private readonly PhotoshopManager painter;
     private readonly UISettings settings;
     public WriteableBitmap Bitmap {get; set;}
@@ -297,7 +300,41 @@ public partial class MainWindow : Window
         resizeTimer.Start();
     }
 
+
+    private void OnImagePointerMoved(object sender, PointerEventArgs e)
+    {
+        if (!_isPanning) return;
+
+        var currentPoint = e.GetPosition(ImageContainer);
+
+        var delta = currentPoint - _startPoint;
+
+        ImageScrollViewer.Offset = new Vector(
+            _startOffset.X - delta.X,
+            _startOffset.Y - delta.Y);
+    }
+
+    private void OnImagePointerReleased(object sender, PointerReleasedEventArgs e)
+    {
+        _isPanning = false;
+        e.Pointer.Capture(null);
+    }
+
+    private void OnPointerCaptureLost(object sender, PointerCaptureLostEventArgs e)
+    {
+        _isPanning = false;
+    }
+
     private void OnImagePointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        _isPanning = true;
+        _startPoint = e.GetPosition(ImageContainer);
+        _startOffset = ImageScrollViewer.Offset;
+
+        e.Pointer.Capture(CanvasImage);
+    }
+
+    private void OnImageDoubleTapped(object sender, TappedEventArgs e)
     {
         painter.SwitchCurImage();
     }
