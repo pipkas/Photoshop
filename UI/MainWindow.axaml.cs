@@ -20,6 +20,7 @@ namespace Photoshop.UI;
 public partial class MainWindow : Window
 {
     private readonly DispatcherTimer resizeTimer;
+    private InterpolationType? interpolationType;
     private bool _isPanning;
     private Point _startPoint;
     private Vector _startOffset;
@@ -110,8 +111,6 @@ public partial class MainWindow : Window
 
     private void MakeToolbarButtons()
     {
-        LabelPanel.Children.Clear();
-
         foreach (var filter in painter.Filters)
         {
             var attr = filter.GetFilterInfo();
@@ -292,14 +291,19 @@ public partial class MainWindow : Window
         CanvasImage?.InvalidateVisual();
     }
 
-    private void OnFitClick(object? sender, RoutedEventArgs e)
+    private async void OnFitClick(object? sender, RoutedEventArgs e)
     {
-        if (sender is Button button && button.Tag is string interpolName 
-            && Enum.TryParse(interpolName, true, out InterpolationType interpolType))
+        if (sender is Button)
         {
-            painter.FitToScreen(interpolType, 
+            var dialog = new FitTypesWindow(interpolationType);
+            await dialog.ShowDialog(this);
+            if (dialog.InterpolType != null){
+                painter.FitToScreen(dialog.InterpolType.Value, 
             new System.Drawing.Size((int)ImageContainer.Width, (int)ImageContainer.Height));
+                interpolationType = dialog.InterpolType;
+            }
         }
+            
     }
 
     private void OnPixelToPixelClick(object? sender, RoutedEventArgs e)

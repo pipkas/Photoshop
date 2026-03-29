@@ -9,7 +9,7 @@
     Height="480"
     Title="Photoshop">
     <Window.Styles>
-        <Style Selector="Button.main-control, ComboBox.main-control">
+        <Style Selector="Button.menu-control, ComboBox.menu-control">
                 <Setter Property="Height" Value="30"/>
                 <Setter Property="MinHeight" Value="30"/>
                 <Setter Property="Margin" Value="0"/>
@@ -37,19 +37,19 @@
 
             <Button Click="OnFileClick"
                     ToolTip.Tip="Открыть файл"
-                    Classes="main-control">
+                    Classes="menu-control">
                     File
             </Button>
 
             <Button Click="OnHelpClick"
                     ToolTip.Tip="О программе"
-                    Classes="main-control">
+                    Classes="menu-control">
                     Help
             </Button>
 
             <Button Click="OnSaveClick"
                     ToolTip.Tip="Сохранить в PNG"
-                    Classes="main-control">
+                    Classes="menu-control">
                     Save
             </Button>
 
@@ -57,7 +57,7 @@
                 HorizontalAlignment="Stretch"
                 SelectedIndex="0"
                 ToolTip.Tip="Фильтры"
-                Classes="main-control">
+                Classes="menu-control">
 
                 <ComboBoxItem IsEnabled="False">
                         <TextBlock Text="Filters"/>
@@ -65,52 +65,19 @@
 
             </ComboBox>
 
-            <ComboBox x:Name="FitComboBox" 
-                HorizontalAlignment="Stretch"
-                SelectedIndex="0"
+            <Button Click="OnFitClick"
+                Classes="menu-control"
                 ToolTip.Tip="Подогнать под экран"
-                Classes="main-control">
-
-                <ComboBoxItem IsEnabled="False">
-                        <TextBlock Text="Fit"/>
-                </ComboBoxItem>
-
-                <ComboBoxItem Padding ="0">
-                        <Button Click="OnFitClick"
-                                Tag="Cubic"
-                                ToolTip.Tip="Кубическая интерполяция"
-                                HorizontalAlignment = "Stretch"
-                                Background = "Transparent">
-                                Cubic
-                        </Button>
-                </ComboBoxItem>
-
-                <ComboBoxItem Padding ="0">
-                        <Button Click="OnFitClick"
-                                Tag="Bilinear"
-                                ToolTip.Tip="Билинейная интерполяция"
-                                HorizontalAlignment = "Stretch"
-                                Background = "Transparent">
-                                Bilinear
-                        </Button>
-                </ComboBoxItem>
-
-                <ComboBoxItem Padding ="0">
-                        <Button Click="OnFitClick"
-                                Tag="Step"
-                                ToolTip.Tip="Ступенчатая интерполяция"
-                                HorizontalAlignment = "Stretch"
-                                Background = "Transparent">
-                                Step
-                        </Button>
-                </ComboBoxItem>
-
-            </ComboBox>
+                Width="50"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center">
+                Fit
+            </Button>
 
             <Button x:Name="PixeltoPixelToggle" 
                 Click="OnPixelToPixelClick"
                 ToolTip.Tip="Реальный размер"
-                Classes="main-control">
+                Classes="menu-control">
                 Real size
              </Button> 
         </StackPanel>
@@ -118,6 +85,27 @@
         <StackPanel x:Name="LabelPanel"
              Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
              Orientation="Horizontal">
+                <Button Click="OnFileClick"
+                        Width = "32"
+                        Height = "32"
+                        Background="Transparent"
+                        ToolTip.Tip="Открыть файл">
+                        <Image Source="avares://Photoshop/Assets/openFile.jpg" 
+                                Stretch="Uniform"
+                                Width = "32"
+                                Height = "32"/>
+                </Button>
+
+                <Button Click="OnFitClick"
+                        Width = "32"
+                        Height = "32"
+                        Background="Transparent"
+                        ToolTip.Tip="Подогнать под экран">
+                        <Image Source="avares://Photoshop/Assets/fit.jpg" 
+                                Stretch="Uniform" 
+                                Width = "32"
+                                Height = "32"/>
+                </Button>
 
         </StackPanel>
 
@@ -127,28 +115,6 @@
                 StrokeThickness="1"
                 IsHitTestVisible="False"
                 Margin="7"/>
-
-        <!-- <Border Grid.Row="2" Grid.Column="1"
-                x:Name="ImageContainer"
-                Background="{DynamicResource WindowBackground}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-                <Grid>
-                        <ScrollViewer x:Name="ImageScrollViewer"
-                                HorizontalScrollBarVisibility="Auto"
-                                VerticalScrollBarVisibility="Auto">
-
-                        <Image x:Name="CanvasImage"
-                                Stretch="None"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                PointerPressed="OnImagePointerPressed"
-                                PointerMoved="OnImagePointerMoved"
-                                PointerReleased="OnImagePointerReleased"
-                                DoubleTapped="OnImageDoubleTapped"/>
-                        </ScrollViewer>
-                </Grid>
-        </Border> -->
 
         <Border Grid.Row="2" Grid.Column="1"
         x:Name="ImageContainer"
