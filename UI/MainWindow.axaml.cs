@@ -66,6 +66,8 @@ public partial class MainWindow : Window
         UpdateBitmap();
         MakeComboBox();
         MakeToolbarButtons();
+        PrevImageButton.IsVisible = false;
+        NextImageButton.IsVisible = false;
     }
 
     private void InitBitmap(int width, int height)
@@ -303,7 +305,6 @@ public partial class MainWindow : Window
                 interpolationType = dialog.InterpolType;
             }
         }
-            
     }
 
     private void OnPixelToPixelClick(object? sender, RoutedEventArgs e)

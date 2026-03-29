@@ -103,8 +103,19 @@
                         ToolTip.Tip="Подогнать под экран">
                         <Image Source="avares://Photoshop/Assets/fit.jpg" 
                                 Stretch="Uniform" 
-                                Width = "32"
-                                Height = "32"/>
+                                Width = "27"
+                                Height = "27"/>
+                </Button>
+
+                 <Button Click="OnPixelToPixelClick"
+                        Width = "32"
+                        Height = "32"
+                        Background="Transparent"
+                        ToolTip.Tip="Реальный размер">
+                        <Image Source="avares://Photoshop/Assets/realSize.jpg" 
+                                Stretch="Uniform" 
+                                Width = "27"
+                                Height = "27"/>
                 </Button>
 
         </StackPanel>
