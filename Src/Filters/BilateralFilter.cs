@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Билатеральное размытие", "BilateralFilter", "Assets/blur.png")]
-[FilterParameter("Размер окна", Min = 3, Max = 11, Type = ParameterType.Integer)]
-[FilterParameter("SigmaSpatial", Min = 1, Max = 10, Type = ParameterType.Double)]
-[FilterParameter("SigmaRange", Min = 1, Max = 100, Type = ParameterType.Double)]
+[Filter("Двусторонний фильтр", "BilateralFilter", "Assets/BilateralFilter.png")]
+[FilterParameter("Радиус окна", Min = 1, Max = 10, Type = ParameterType.Integer)]
+[FilterParameter("SigmaSpace", Min = 1, Max = 20, Type = ParameterType.Double)]
+[FilterParameter("SigmaColor", Min = 1, Max = 150, Type = ParameterType.Double)]
 public class BilateralFilter : IFilter
 {
     public double[] Parameters { get; private set; }
@@ -14,105 +15,134 @@ public class BilateralFilter : IFilter
     {
         Parameters = parameters;
 
-        int kernelSize = (int)parameters[0];
-        double sigmaSpatial = parameters[1];
-        double sigmaRange = parameters[2];
-
-        if (kernelSize % 2 == 0)
-        {
-            kernelSize++;
-        }
-
-        if (kernelSize < 3)
-        {
-            kernelSize = 3;
-        }
-
-        if (kernelSize > 11)
-        {
-            kernelSize = 11;
-        }
+        int radius = Math.Max(1, (int)parameters[0]);
+        float sigmaSpace = (float)Math.Max(0.1, parameters[1]);
+        float sigmaColor = (float)Math.Max(0.1, parameters[2]);
 
         int width = originalPicture.Width;
         int height = originalPicture.Height;
-        int radius = kernelSize / 2;
 
         Picture result = new Picture(width, height);
-        
-        double[,] lum = new double[width, height];
+
+        byte[,] sourceR = new byte[height, width];
+        byte[,] sourceG = new byte[height, width];
+        byte[,] sourceB = new byte[height, width];
+
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                var p = originalPicture.GetPixel(x, y);
-                lum[x, y] = p[0] * 0.299 + p[1] * 0.587 + p[2] * 0.114;
+                ReadOnlySpan<byte> pixel = originalPicture.GetPixel(x, y);
+                sourceR[y, x] = pixel[0];
+                sourceG[y, x] = pixel[1];
+                sourceB[y, x] = pixel[2];
             }
         }
-        
-        double[,] spatial = new double[kernelSize, kernelSize];
+
+        float twoSigmaSpaceSq = 2f * sigmaSpace * sigmaSpace;
+        float twoSigmaColorSq = 2f * sigmaColor * sigmaColor;
+
+        int size = 2 * radius + 1;
+        float[,] spatialKernel = new float[size, size];
+
         for (int dy = -radius; dy <= radius; dy++)
         {
             for (int dx = -radius; dx <= radius; dx++)
             {
-                double dist2 = dx * dx + dy * dy;
-                spatial[dy + radius, dx + radius] =
-                    Math.Exp(-dist2 / (2 * sigmaSpatial * sigmaSpatial));
+                float distanceSq = dx * dx + dy * dy;
+                spatialKernel[dy + radius, dx + radius] =
+                    MathF.Exp(-distanceSq / twoSigmaSpaceSq);
             }
         }
 
-        for (int y = radius; y < height - radius; y++)
+        const int maxColorDistanceSq = 255 * 255 * 3;
+        float[] colorKernel = new float[maxColorDistanceSq + 1];
+
+        for (int i = 0; i <= maxColorDistanceSq; i++)
         {
-            for (int x = radius; x < width - radius; x++)
+            colorKernel[i] = MathF.Exp(-i / twoSigmaColorSq);
+        }
+
+        byte[,] resultR = new byte[height, width];
+        byte[,] resultG = new byte[height, width];
+        byte[,] resultB = new byte[height, width];
+
+        Parallel.For(0, height, y =>
+        {
+            for (int x = 0; x < width; x++)
             {
-                double sumR = 0, sumG = 0, sumB = 0;
-                double norm = 0;
+                byte centerR = sourceR[y, x];
+                byte centerG = sourceG[y, x];
+                byte centerB = sourceB[y, x];
 
-                double centerLum = lum[x, y];
+                float sumR = 0f;
+                float sumG = 0f;
+                float sumB = 0f;
+                float weightSum = 0f;
 
-                for (int dy = -radius; dy <= radius; dy++)
+                int yMin = Math.Max(0, y - radius);
+                int yMax = Math.Min(height - 1, y + radius);
+                int xMin = Math.Max(0, x - radius);
+                int xMax = Math.Min(width - 1, x + radius);
+
+                for (int ny = yMin; ny <= yMax; ny++)
                 {
-                    for (int dx = -radius; dx <= radius; dx++)
+                    int kernelY = ny - y + radius;
+
+                    for (int nx = xMin; nx <= xMax; nx++)
                     {
-                        int px = x + dx;
-                        int py = y + dy;
+                        int kernelX = nx - x + radius;
 
-                        var p = originalPicture.GetPixel(px, py);
+                        byte neighborR = sourceR[ny, nx];
+                        byte neighborG = sourceG[ny, nx];
+                        byte neighborB = sourceB[ny, nx];
 
-                        double diff = lum[px, py] - centerLum;
+                        int dR = centerR - neighborR;
+                        int dG = centerG - neighborG;
+                        int dB = centerB - neighborB;
 
-                        double range = Math.Exp(-(diff * diff) / (2 * sigmaRange * sigmaRange));
+                        int colorDistanceSq = dR * dR + dG * dG + dB * dB;
 
-                        double weight = spatial[dy + radius, dx + radius] * range;
+                        float spatialWeight = spatialKernel[kernelY, kernelX];
+                        float rangeWeight = colorKernel[colorDistanceSq];
+                        float weight = spatialWeight * rangeWeight;
 
-                        sumR += p[0] * weight;
-                        sumG += p[1] * weight;
-                        sumB += p[2] * weight;
-
-                        norm += weight;
+                        weightSum += weight;
+                        sumR += neighborR * weight;
+                        sumG += neighborG * weight;
+                        sumB += neighborB * weight;
                     }
                 }
 
-                result.SetPixel(x, y,
-                    Clamp((int)(sumR / norm + 0.5)),
-                    Clamp((int)(sumG / norm + 0.5)),
-                    Clamp((int)(sumB / norm + 0.5)));
+                resultR[y, x] = ClampToByte(sumR / weightSum);
+                resultG[y, x] = ClampToByte(sumG / weightSum);
+                resultB[y, x] = ClampToByte(sumB / weightSum);
+            }
+        });
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                result.SetPixel(x, y, resultR[y, x], resultG[y, x], resultB[y, x]);
             }
         }
 
         return result;
     }
 
-    private byte Clamp(int v)
+    private static byte ClampToByte(float value)
     {
-        if (v < 0)
+        if (value < 0f)
         {
             return 0;
         }
 
-        if (v > 255)
+        if (value > 255f)
         {
             return 255;
         }
-        return (byte)v;
+
+        return (byte)MathF.Round(value);
     }
 }
