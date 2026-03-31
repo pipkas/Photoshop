@@ -2,7 +2,7 @@
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Упорядоченный дизеринг", "SerafimOrderedDitheringFilter", null)]
+[Filter("Упорядоченный дизеринг", "Serafim's ordered dithering filter", null)]
 [FilterParameter("Красный", Min = 2, Max = 128, Type = ParameterType.Double)]
 [FilterParameter("Зелёный", Min = 2, Max = 128, Type = ParameterType.Double)]
 [FilterParameter("Синий", Min = 2, Max = 128, Type = ParameterType.Double)]

@@ -2,7 +2,7 @@
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Гамма-коррекция", "GammaFilter", "Assets/Gamma.png")]
+[Filter("Гамма-коррекция", "Gamma filter", "Assets/Gamma.png")]
 [FilterParameter("Гамма", Min = 0.1, Max = 10, Type = ParameterType.Double)]
 public class GammaFilter : IFilter
 {

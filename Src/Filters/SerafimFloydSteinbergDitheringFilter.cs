@@ -2,9 +2,9 @@
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Дизеринг Флойда-Стейнберга", "SerafimFloydSteinbergDitheringFilter", null)]
-[FilterParameter("Красаный", Min = 2, Max = 128, Type = ParameterType.Double)]
-[FilterParameter("Зелейный", Min = 2, Max = 128, Type = ParameterType.Double)]
+[Filter("Дизеринг Флойда-Стейнберга", "Serafim's Floyd-Steinberg dithering filter", null)]
+[FilterParameter("Красный", Min = 2, Max = 128, Type = ParameterType.Double)]
+[FilterParameter("Зелёный", Min = 2, Max = 128, Type = ParameterType.Double)]
 [FilterParameter("Синий", Min = 2, Max = 128, Type = ParameterType.Double)]
 public class SerafimFloydSteinbergDitheringFilter : IFilter
 {
@@ -16,7 +16,7 @@ public class SerafimFloydSteinbergDitheringFilter : IFilter
         int redlvl = (int)Math.Round(Math.Clamp(parameters[0], 2.0, 128.0));
         int greenlvl = (int)Math.Round(Math.Clamp(parameters[1], 2.0, 128.0));
         int bluelvl = (int)Math.Round(Math.Clamp(parameters[2], 2.0, 128.0));
-        Console.WriteLine(redlvl);
+        
         int w = originalPicture.Width;
         int h = originalPicture.Height;
         Picture result = new Picture(w, h);
@@ -44,8 +44,6 @@ public class SerafimFloydSteinbergDitheringFilter : IFilter
                 byte R2 = GetLvlInAvailbleValue(R1, redlvl);
                 byte G2 = GetLvlInAvailbleValue(G1, greenlvl);
                 byte B2 = GetLvlInAvailbleValue(B1, bluelvl);
-                // Console.Write("R1 =>", R1);
-                // Console.Write("R =>", R2);
                 result.SetPixel(x, y, R2, G2, B2);
                 double errRedCh = R1 - R2;
                 double errGreenCh = G1 - G2;

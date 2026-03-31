@@ -2,7 +2,7 @@
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Фильтр выделения границ собеля", "BorderSelectionFilter", "Assets/Sobel.png")]
+[Filter("Фильтр выделения границ Собеля", "Border selection filter", "Assets/Sobel.png")]
 [FilterParameter("Порог бинаризации", Min = 0, Max = 1500, Type = ParameterType.Integer)]
 public class BorderSelectionFilterSobel : IFilter
 {

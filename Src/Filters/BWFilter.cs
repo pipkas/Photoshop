@@ -2,7 +2,7 @@ using System;
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Черно-белый фильтр", "BWFilter", "Assets/bw.png")]
+[Filter("Черно-белый фильтр", "BW filter", "Assets/bw.png")]
 public class BWFilter : IFilter
 {
     public double[] Parameters {get; private set;} = Array.Empty<double>();

@@ -2,8 +2,7 @@
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Увеличение резкости", "SharpenFilter", "Assets/Sharpen.png")]
-[FilterParameter("Интенсивность", Min = 0, Max = 0, Type = ParameterType.Double)]
+[Filter("Увеличение резкости", "Sharpen filter", "Assets/Sharpen.png")]
 public class SharpenFilter : IFilter
 {
     private static readonly double[,] Kernel = new double[,]

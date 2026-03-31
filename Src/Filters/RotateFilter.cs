@@ -2,7 +2,7 @@ using System;
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Поворот", "RotateFilter", "Assets/rotate.png")]
+[Filter("Поворот", "Rotate filter", "Assets/rotate.png")]
 [FilterParameter("Угол поворота", Min = -180, Max = 180, Type = ParameterType.Double)]
 public class RotateFilter : IFilter
 {

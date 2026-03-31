@@ -131,8 +131,8 @@ public partial class MainWindow : Window
             {
                 var image = new Image
                 {
-                    Width = 24,
-                    Height = 24,
+                    Width = 26,
+                    Height = 26,
                     Stretch = Stretch.Uniform,
                     Source = new Bitmap(attr.ImagePath)
                 };

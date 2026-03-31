@@ -2,11 +2,11 @@ using System;
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Упорядоченный дизеринг", "Polina's ordered dithering filter", null)]
+[Filter("Упорядоченный дизеринг", "Sonya's ordered dithering filter", null)]
 [FilterParameter("Уровень квантования (R)", Min = 2, Max = 128, Type = ParameterType.Integer)]
 [FilterParameter("Уровень квантования (G)", Min = 2, Max = 128, Type = ParameterType.Integer)]
 [FilterParameter("Уровень квантования (B)", Min = 2, Max = 128, Type = ParameterType.Integer)]
-public class PolinaOrderedDitherFilter : IFilter
+public class SonyaOrderedDitheringFilter : IFilter
 {
     public double[] Parameters { get; private set; } = Array.Empty<double>();
     private const int MaxMatrixSize = 8;

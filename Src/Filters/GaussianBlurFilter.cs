@@ -2,7 +2,7 @@ using System;
 
 namespace Photoshop.Src.Filters;
 
-[Filter("Сглаживание (Гаусс)", "GaussianBlurFilter", "Assets/blur.png")]
+[Filter("Сглаживание (Гаусс)", "Gaussian blur filter", "Assets/blur.png")]
 [FilterParameter("Размер ядра", Min = 3, Max = 11, Type = ParameterType.OddInteger)]
 public class GaussianBlurFilter : IFilter
 {

@@ -3,11 +3,11 @@ using System;
 namespace Photoshop.Src.Filters;
 
 //цель: уменьшить число цветов, но сделать так, чтобы мы видели картинку "плавной"
-[Filter("Floyd-Steinberg дизеринг", "Polina's Floyd-Steinberg dithering filter", null)]
-[FilterParameter("Уровень квантования (R)", Min = 2, Max = 128, Type = ParameterType.Integer)]
-[FilterParameter("Уровень квантования (G)", Min = 2, Max = 128, Type = ParameterType.Integer)]
-[FilterParameter("Уровень квантования (B)", Min = 2, Max = 128, Type = ParameterType.Integer)]
-public class PolinaDitherFilter : IFilter
+[Filter("Floyd-Steinberg дизеринг", "Sonya's Floyd-Steinberg dithering filter", null)]
+[FilterParameter("R", Min = 2, Max = 128, Type = ParameterType.Integer)]
+[FilterParameter("G", Min = 2, Max = 128, Type = ParameterType.Integer)]
+[FilterParameter("B", Min = 2, Max = 128, Type = ParameterType.Integer)]
+public class SonyaFSDitheringFilter : IFilter
 {
     public double[] Parameters {get; private set;} = Array.Empty<double>();
 

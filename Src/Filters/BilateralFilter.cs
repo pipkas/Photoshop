@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 
 namespace Photoshop.Src.Filters;
 
-[Filter("BilateralFilter фильтр", "BilateralFilter", "Assets/BilateralFilter.png")]
+[Filter("Двусторонний фильтр", "Bilateral filter", "Assets/BilateralFilter.png")]
 [FilterParameter("Радиус окна", Min = 1, Max = 10, Type = ParameterType.Integer)]
-[FilterParameter("SigmaSpace", Min = 1, Max = 20, Type = ParameterType.Double)]
-[FilterParameter("SigmaColor", Min = 1, Max = 150, Type = ParameterType.Double)]
+[FilterParameter("Sigma space", Min = 1, Max = 20, Type = ParameterType.Double)]
+[FilterParameter("Sigma color", Min = 1, Max = 150, Type = ParameterType.Double)]
 public class BilateralFilter : IFilter
 {
     public double[] Parameters { get; private set; }
@@ -55,11 +55,6 @@ public class BilateralFilter : IFilter
             }
         }
 
-        foreach (var v in  spatialKernel)
-        {
-            Console.Write(v + " ");
-        }
-        Console.WriteLine();
         const int maxColorDistanceSq = 255 * 255 * 3;
         float[] colorKernel = new float[maxColorDistanceSq + 1];
 
